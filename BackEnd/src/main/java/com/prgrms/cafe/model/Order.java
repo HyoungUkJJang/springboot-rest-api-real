@@ -13,6 +13,17 @@ public class Order extends BaseTime {
     private final List<OrderItem> orderItems;
     private OrderStatus orderStatus;
 
+    public Order(UUID orderId, Email email, String address, String postcode, List<OrderItem> orderItems,
+        OrderStatus orderStatus, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        super(createdAt, updatedAt);
+        this.orderId = orderId;
+        this.email = email;
+        this.address = address;
+        this.postcode = postcode;
+        this.orderItems = orderItems;
+        this.orderStatus = orderStatus;
+    }
+
     public Order(UUID orderId, Email email, String address, String postcode,
         List<OrderItem> orderItems, OrderStatus orderStatus) {
         super(LocalDateTime.now(), LocalDateTime.now());

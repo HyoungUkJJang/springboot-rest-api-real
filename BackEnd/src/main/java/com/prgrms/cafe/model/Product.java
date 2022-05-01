@@ -11,6 +11,16 @@ public class Product extends BaseTime {
     private long price;
     private String description;
 
+    public Product(UUID productId, String productName, Category category,
+        long price, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        super(createdAt, updatedAt);
+        this.productId = productId;
+        this.productName = productName;
+        this.category = category;
+        this.price = price;
+        this.description = description;
+    }
+
     public Product(UUID productId, String productName, Category category, long price, String description) {
         super(LocalDateTime.now(), LocalDateTime.now());
         this.productId = productId;
