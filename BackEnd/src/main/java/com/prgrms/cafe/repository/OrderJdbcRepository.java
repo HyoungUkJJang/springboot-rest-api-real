@@ -20,7 +20,7 @@ public class OrderJdbcRepository implements OrderRepository {
     }
 
     @Override
-    public Order insert(Order order) {
+    public Order save(Order order) {
         jdbcTemplate.update(
             "insert into orders(order_id, email, address, postcode, order_status, created_at, updated_at)"
                 + " values(UUID_TO_BIN(:orderId), :email, :address, :postcode, :orderStatus, :createdAt, :updatedAt)"

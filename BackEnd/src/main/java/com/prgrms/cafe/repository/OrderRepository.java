@@ -4,6 +4,6 @@ import com.prgrms.cafe.model.Order;
 
 public interface OrderRepository {
 
-    Order insert(Order order);
+    Order save(Order order);
 
 }
