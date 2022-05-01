@@ -3,25 +3,21 @@ package com.prgrms.cafe.model;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Product {
+public class Product extends BaseTime {
 
     private final UUID productId;
     private String productName;
     private Category category;
     private long price;
     private String description;
-    private final LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 
-    public Product(UUID productId, String productName, Category category, long price,
-        String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Product(UUID productId, String productName, Category category, long price, String description) {
+        super(LocalDateTime.now(), LocalDateTime.now());
         this.productId = productId;
         this.productName = productName;
         this.category = category;
         this.price = price;
         this.description = description;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
     public void setProductName(String productName) {
@@ -62,18 +58,6 @@ public class Product {
 
     public String getDescription() {
         return description;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    private void changeUpdateTime() {
-        this.updatedAt = LocalDateTime.now();
     }
 
 }
