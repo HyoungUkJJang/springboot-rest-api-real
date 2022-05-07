@@ -8,7 +8,8 @@ import java.util.UUID;
 
 public interface OrderService {
 
-    Order createOrder(Email email, String address, String postcode, List<OrderItem> orderItems);
+    Order createOrder(Email email, String address,
+        String postcode, List<OrderItem> orderItems);
 
     List<Order> getOrders();
 
@@ -16,7 +17,8 @@ public interface OrderService {
 
     void changeStatus(UUID orderId, String orderStatus);
 
-    void changeAddressAndPostcode(UUID orderId, String address, String postcode);
+    void changeAddressAndPostcode(UUID orderId, String address,
+        String postcode);
 
     void deleteOrder(UUID orderId);
 

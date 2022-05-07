@@ -27,15 +27,18 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public Order createOrder(Email email, String address, String postcode, List<OrderItem> orderItems) {
+    public Order createOrder(Email email, String address,
+        String postcode, List<OrderItem> orderItems) {
+
         Order order = orderRepository.save(
-            new Order(UUID.randomUUID(), email, address, postcode, orderItems, OrderStatus.ACCEPTED)
+            new Order(UUID.randomUUID(), email, address, postcode,
+                orderItems, OrderStatus.ACCEPTED)
         );
 
         orderItems.stream().map(
-                item -> new OrderItem(order.getOrderId(), item.productId(), item.category(),
-                    item.price(), item.quantity()))
-            .forEach(i -> orderItemRepository.save(i));
+                item -> new OrderItem(order.getOrderId(), item.productId(),
+                    item.category(), item.price(), item.quantity()))
+            .forEach(orderItem -> orderItemRepository.save(orderItem));
 
         return order;
     }
@@ -51,8 +54,9 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.findById(orderId)
             .orElseThrow(NoSuchElementException::new);
 
-        return new Order(order.getOrderId(), order.getEmail(), order.getAddress(), order.getPostcode(),
-            orderItems, order.getOrderStatus(), order.getCreatedAt(), order.getUpdatedAt());
+        return new Order(order.getOrderId(), order.getEmail(), order.getAddress(),
+            order.getPostcode(), orderItems, order.getOrderStatus(),
+            order.getCreatedAt(), order.getUpdatedAt());
     }
 
     @Override
