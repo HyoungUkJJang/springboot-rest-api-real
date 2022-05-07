@@ -33,11 +33,11 @@ class ProductJdbcRepositoryTest {
 
     private static final Product VALID_PRODUCT = new Product(
         UUID.randomUUID(), "new-product",
-        Category.COFFEE_BEAN_PACKAGE, 1000L, "description");
+        Category.STARBUCKS_COFFEE_PACKAGE, 1000L, "description");
 
     private static final Product VALID_UPDATE_PRODUCT = new Product(
         VALID_PRODUCT.getProductId(), "update-product",
-        Category.COFFEE_BEAN_PACKAGE, 5000L, "update-description");
+        Category.STARBUCKS_COFFEE_PACKAGE, 5000L, "update-description");
 
     static EmbeddedMysql embeddedMysql;
 
