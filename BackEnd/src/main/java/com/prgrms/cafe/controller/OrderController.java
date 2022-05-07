@@ -54,4 +54,11 @@ public class OrderController {
         return "redirect:/orders/" + orderId;
     }
 
+    @GetMapping("/orders/delete/{orderId}")
+    public String deleteOrder(@PathVariable UUID orderId, Model model) {
+        orderService.deleteOrder(orderId);
+        model.addAttribute("orders", orderService.getOrders());
+        return "orders";
+    }
+
 }
