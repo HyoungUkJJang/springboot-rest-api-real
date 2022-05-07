@@ -1,11 +1,10 @@
 package com.prgrms.cafe.repository;
 
+import static com.prgrms.cafe.repository.JdbcUtils.toLocalDateTime;
+import static com.prgrms.cafe.repository.JdbcUtils.toUUID;
+
 import com.prgrms.cafe.model.Category;
 import com.prgrms.cafe.model.Product;
-import java.nio.ByteBuffer;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashMap;
@@ -48,7 +47,7 @@ public class ProductJdbcRepository implements ProductRepository {
     @Override
     public Product update(Product product) {
         int update = jdbcTemplate.update(
-            "update products set product_name = :productName, category = :category, price = :price, description = :description, created_at = :createdAt, updated_at = :updatedAt"
+            "update products set product_name = :productName, category = :category, price = :price, description = :description, updated_at = :updatedAt"
                 + " where product_id = UUID_TO_BIN(:productId)", toParamMap(product));
         if (update == 0) {
             throw new RuntimeException("수정이 되지 않았습니다.");
@@ -93,6 +92,12 @@ public class ProductJdbcRepository implements ProductRepository {
     }
 
     @Override
+    public void deleteById(UUID productId) {
+        jdbcTemplate.update("delete from products where product_id = UUID_TO_BIN(:productId)",
+            Collections.singletonMap("productId", productId.toString().getBytes()));
+    }
+
+    @Override
     public void deleteAll() {
         jdbcTemplate.update("delete from products", Collections.emptyMap());
     }
@@ -121,14 +126,4 @@ public class ProductJdbcRepository implements ProductRepository {
         paramMap.put("updatedAt", product.getUpdatedAt());
         return paramMap;
     }
-
-    private static UUID toUUID(byte[] bytes) {
-        ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
-        return new UUID(byteBuffer.getLong(), byteBuffer.getLong());
-    }
-
-    public static LocalDateTime toLocalDateTime(Timestamp timestamp) {
-        return timestamp != null ? timestamp.toLocalDateTime() : null;
-    }
-
 }
