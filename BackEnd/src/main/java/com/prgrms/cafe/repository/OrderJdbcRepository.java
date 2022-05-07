@@ -88,6 +88,12 @@ public class OrderJdbcRepository implements OrderRepository {
         }
     }
 
+    @Override
+    public void deleteById(UUID orderId) {
+        jdbcTemplate.update("delete from orders where order_id = UUID_TO_BIN(:orderId)",
+            Collections.singletonMap("orderId", orderId.toString().getBytes()));
+    }
+
     private static final RowMapper<Order> orderRowMapper = (resultSet, i) -> {
         UUID orderId = toUUID(resultSet.getBytes("order_id"));
         Email emil = new Email(resultSet.getString("email"));

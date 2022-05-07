@@ -67,4 +67,11 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.update(orderId, address, postcode);
     }
 
+    @Override
+    @Transactional
+    public void deleteOrder(UUID orderId) {
+        orderItemRepository.deleteById(orderId);
+        orderRepository.deleteById(orderId);
+    }
+
 }

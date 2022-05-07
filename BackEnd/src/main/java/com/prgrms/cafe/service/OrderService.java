@@ -18,4 +18,6 @@ public interface OrderService {
 
     void changeAddressAndPostcode(UUID orderId, String address, String postcode);
 
+    void deleteOrder(UUID orderId);
+
 }

@@ -17,4 +17,6 @@ public interface OrderRepository {
 
     Optional<Order> findById(UUID orderId);
 
+    void deleteById(UUID orderId);
+
 }

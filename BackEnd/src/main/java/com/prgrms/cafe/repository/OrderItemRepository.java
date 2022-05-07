@@ -10,4 +10,6 @@ public interface OrderItemRepository {
 
     List<OrderItem> findById(UUID orderId);
 
+    void deleteById(UUID orderId);
+
 }

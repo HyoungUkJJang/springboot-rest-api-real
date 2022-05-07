@@ -44,6 +44,12 @@ public class OrderItemJdbcRepository implements OrderItemRepository {
             Collections.singletonMap("orderId", orderId.toString().getBytes()), orderItemRowMapper);
     }
 
+    @Override
+    public void deleteById(UUID orderId) {
+        jdbcTemplate.update("delete from order_items where order_id = UUID_TO_BIN(:orderId)",
+            Collections.singletonMap("orderId", orderId.toString().getBytes()));
+    }
+
     // 상품 로우매퍼
     private static final RowMapper<OrderItem> orderItemRowMapper = (resultSet, i) -> {
         UUID orderId = toUUID(resultSet.getBytes("order_id"));
