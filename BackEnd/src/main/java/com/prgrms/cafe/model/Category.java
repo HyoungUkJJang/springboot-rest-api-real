@@ -1,5 +1,8 @@
 package com.prgrms.cafe.model;
 
 public enum Category {
-    COFFEE_BEAN_PACKAGE;
+    STARBUCKS_COFFEE_PACKAGE,
+    TWOSOME_COFFEE_PACKAGE,
+    EDIYA_COFFEE_PACKAGE,
+    MEGA_COFFEE_PACKAGE;
 }

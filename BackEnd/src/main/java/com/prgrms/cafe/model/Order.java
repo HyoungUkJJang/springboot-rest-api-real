@@ -10,7 +10,7 @@ public class Order extends BaseTime {
     private final Email email;
     private String address;
     private String postcode;
-    private final List<OrderItem> orderItems;
+    private List<OrderItem> orderItems;
     private OrderStatus orderStatus;
 
     public Order(UUID orderId, Email email, String address, String postcode, List<OrderItem> orderItems,
