@@ -12,10 +12,10 @@ public interface OrderService {
 
     List<Order> getOrders();
 
+    Order getOrder(UUID orderId);
+
     void changeStatus(UUID orderId, String orderStatus);
 
     void changeAddressAndPostcode(UUID orderId, String address, String postcode);
-
-    Order getOrder(UUID orderId);
 
 }

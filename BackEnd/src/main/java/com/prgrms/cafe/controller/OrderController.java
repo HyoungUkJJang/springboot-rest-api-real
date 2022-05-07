@@ -35,6 +35,13 @@ public class OrderController {
         return "order";
     }
 
+    @PutMapping("/orders/{orderId}/setStatus")
+    @ResponseBody
+    public String changeStatus(@PathVariable UUID orderId, @RequestBody String orderStatus) {
+        orderService.changeStatus(orderId, orderStatus);
+        return "success";
+    }
+
     @GetMapping("/orders/update/{orderId}")
     public String updatePage(@PathVariable UUID orderId, Model model) {
         model.addAttribute("order", orderService.getOrder(orderId));
@@ -45,13 +52,6 @@ public class OrderController {
     public String updateOrder(@PathVariable UUID orderId, UpdateOrderRequest updateOrderRequest) {
         orderService.changeAddressAndPostcode(orderId, updateOrderRequest.address(), updateOrderRequest.postcode());
         return "redirect:/orders/" + orderId;
-    }
-
-    @PutMapping("/orders/{orderId}/setStatus")
-    @ResponseBody
-    public String changeStatus(@PathVariable UUID orderId, @RequestBody String orderStatus) {
-        orderService.changeStatus(orderId, orderStatus);
-        return "success";
     }
 
 }

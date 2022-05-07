@@ -27,12 +27,15 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public Order createOrder(Email email, String address, String postcode,
-        List<OrderItem> orderItems) {
+    public Order createOrder(Email email, String address, String postcode, List<OrderItem> orderItems) {
         Order order = orderRepository.save(
-            new Order(UUID.randomUUID(), email, address, postcode, orderItems,
-                OrderStatus.ACCEPTED));
-        orderItems.forEach(item -> orderItemRepository.save(item));
+            new Order(UUID.randomUUID(), email, address, postcode, orderItems, OrderStatus.ACCEPTED)
+        );
+
+        orderItems.stream().map(
+                item -> new OrderItem(order.getOrderId(), item.productId(), item.category(),
+                    item.price(), item.quantity()))
+            .forEach(i -> orderItemRepository.save(i));
 
         return order;
     }
@@ -40,6 +43,16 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> getOrders() {
         return orderRepository.findAll();
+    }
+
+    @Override
+    public Order getOrder(UUID orderId) {
+        List<OrderItem> orderItems = orderItemRepository.findById(orderId);
+        Order order = orderRepository.findById(orderId)
+            .orElseThrow(NoSuchElementException::new);
+
+        return new Order(order.getOrderId(), order.getEmail(), order.getAddress(), order.getPostcode(),
+            orderItems, order.getOrderStatus(), order.getCreatedAt(), order.getUpdatedAt());
     }
 
     @Override
@@ -52,16 +65,6 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public void changeAddressAndPostcode(UUID orderId, String address, String postcode) {
         orderRepository.update(orderId, address, postcode);
-    }
-
-    @Override
-    public Order getOrder(UUID orderId) {
-        List<OrderItem> orderItems = orderItemRepository.findById(orderId);
-        Order order = orderRepository.findById(orderId)
-            .orElseThrow(NoSuchElementException::new);
-
-        return new Order(order.getOrderId(), order.getEmail(), order.getAddress(), order.getPostcode(),
-            orderItems, order.getOrderStatus(), order.getCreatedAt(), order.getUpdatedAt());
     }
 
 }
