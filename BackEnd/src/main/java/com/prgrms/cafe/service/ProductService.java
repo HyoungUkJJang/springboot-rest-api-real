@@ -19,4 +19,8 @@ public interface ProductService {
 
     Product createProduct(String productName, Category category, long price, String description);
 
+    Product updateProduct(UUID productId, String productName, Category category, long price, String description);
+
+    void removeProduct(UUID productId);
+
 }
